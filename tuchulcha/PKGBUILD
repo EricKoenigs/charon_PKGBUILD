@@ -1,0 +1,37 @@
+# Maintainer: Eric Koenigs <e.koenigs@stud.uni-heidelberg.de>
+
+pkgname=tuchulcha
+pkgver=0.1.6
+pkgrel=1
+pkgdesc="Graphical configuration/workflow editor for algorithm prototyping. Part of the Charon-Suite."
+arch=('any')
+url="https://sourceforge.net/apps/trac/charon-suite"
+license=('LGPL3')
+groups=("charon-suite")
+makedepends=('svn' 'cmake')
+depends=('charon-core' 'qt')
+optdepends=('charon-utils: Basic Image manipulation and processing modules'
+'charon: Optical flow estimation modules'
+)
+
+build() {
+  msg "Fetching svn sources from SourceForge..."
+
+  svn co https://charon-suite.svn.sourceforge.net/svnroot/charon-suite/tuchulcha/trunk tuchulcha
+
+  msg "Configuring build..."
+
+  mkdir -p $startdir/build
+  cd $startdir/build
+
+  cmake $startdir/src/tuchulcha
+  make
+  
+}
+
+package() {
+  cd $startdir/build
+  make DESTDIR="$pkgdir/" install
+}
+
+# vim:set ts=2 sw=2 et:

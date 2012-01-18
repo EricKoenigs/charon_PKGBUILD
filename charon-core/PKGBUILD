@@ -1,0 +1,36 @@
+# Maintainer: Eric Koenigs <e.koenigs@stud.uni-heidelberg.de>
+
+pkgname=charon-core
+pkgver=0.1.6
+pkgrel=1
+pkgdesc="Part of the Charon-Suite. Basic framework for module management."
+arch=('any')
+url="https://sourceforge.net/apps/trac/charon-suite"
+license=('LGPL3')
+groups=("charon-suite")
+makedepends=('svn' 'cmake')
+optdepends=('doxygen: documentation generation'
+'texlive-latexextra: pdf-documentation and formulas'
+)
+
+build() {
+  msg "Fetching svn sources from SourceForge..."
+
+  svn co https://charon-suite.svn.sourceforge.net/svnroot/charon-suite/charon-core/trunk charon-core
+
+  msg "Configuring build..."
+
+  mkdir -p $startdir/build
+  cd $startdir/build
+
+  cmake $startdir/src/charon-core
+  make
+  
+}
+
+package() {
+  cd $startdir/build
+  make DESTDIR="$pkgdir/" install
+}
+
+# vim:set ts=2 sw=2 et:

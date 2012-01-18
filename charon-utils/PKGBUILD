@@ -1,0 +1,34 @@
+# Maintainer: Eric Koenigs <e.koenigs@stud.uni-heidelberg.de>
+
+pkgname=charon-utils
+pkgver=0.1.6
+pkgrel=1
+pkgdesc="Part of the Charon-Suite. Basic Image manipulation and processing modules."
+arch=('any')
+url="https://sourceforge.net/apps/trac/charon-suite"
+license=('LGPL3')
+groups=("charon-suite")
+depends=('charon-core' 'vigra' 'qt' 'openmpi' 'boost' 'lapack' 'mesa')
+makedepends=('svn' 'cmake')
+
+build() {
+  msg "Fetching svn sources from SourceForge..."
+
+  svn co https://charon-suite.svn.sourceforge.net/svnroot/charon-suite/charon-utils/trunk charon-utils
+
+  msg "Configuring build..."
+
+  mkdir -p $startdir/build
+  cd $startdir/build
+
+  cmake $startdir/src/charon-utils
+  make
+  
+}
+
+package() {
+  cd $startdir/build
+  make DESTDIR="$pkgdir/" install
+}
+
+# vim:set ts=2 sw=2 et:
