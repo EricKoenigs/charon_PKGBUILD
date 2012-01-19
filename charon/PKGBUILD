@@ -11,6 +11,9 @@ groups=("charon-suite")
 depends=('charon-core' 'charon-utils' 'petsc')
 makedepends=('svn' 'cmake')
 
+# Switch off the --as-needed flag for ld, it breaks the build.
+LDFLAGS="$LDFLAGS,--no-as-needed"
+
 build() {
   msg "Fetching svn sources from SourceForge..."
 
@@ -21,7 +24,7 @@ build() {
   mkdir -p $startdir/build
   cd $startdir/build
 
-  cmake $startdir/src/charon
+  cmake $srcdir/charon
   make
   
 }
