@@ -1,6 +1,6 @@
 # Maintainer: Eric Koenigs <e.koenigs@stud.uni-heidelberg.de>
 
-pkgname=charon-core
+pkgname=charon-templategenerator
 pkgver=0.1.4
 pkgrel=1
 pkgdesc="Part of the Charon-Suite. Software assistant to set up module code templates."
