@@ -12,6 +12,7 @@ case $1 in
 		echo "Building everything..."
 		./autobuild.sh core
 		./autobuild.sh utils
+		./autobuild.sh flow
 		./autobuild.sh tuchulcha
 		./autobuild.sh template
 		;;
