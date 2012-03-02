@@ -8,24 +8,35 @@ arch=('any')
 url="https://sourceforge.net/apps/trac/charon-suite"
 license=('LGPL3')
 groups=("charon-suite")
-depends=('charon-core' 'charon-utils' 'petsc')
-makedepends=('svn' 'cmake')
-
-# Switch off the --as-needed flag for ld, it breaks the build.
-LDFLAGS="$LDFLAGS,--no-as-needed"
+depends=('charon-core' 'charon-utils')
+makedepends=('bzr' 'cmake')
+optdepends=('doxygen: documentation generation'
+'texlive-latexextra: pdf-documentation and formulas'
+)
 
 build() {
-  msg "Fetching svn sources from SourceForge..."
+  msg "Fetching bzr sources from Launchpad..."
 
-  svn co https://charon-suite.svn.sourceforge.net/svnroot/charon-suite/charon/trunk charon
+  #bzr branch lp:charon-flow
 
   msg "Configuring build..."
 
   mkdir -p $startdir/build
   cd $startdir/build
 
-  cmake $srcdir/charon
+  cmake $srcdir/charon-flow \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -Dcharon-core_HTMLDOC_DIR=/usr/share/doc/charon-core \
+    -Dcharon-utils_HTMLDOC_DIR=/usr/share/doc/charon-utils 
+
   make
+
+  if [ $(pacman -Qq doxygen) = "doxygen" ]
+  then
+    msg "Doxygen installed, creating documentation..."
+    make doc
+  fi
   
 }
 

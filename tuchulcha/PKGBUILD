@@ -8,24 +8,36 @@ arch=('any')
 url="https://sourceforge.net/apps/trac/charon-suite"
 license=('LGPL3')
 groups=("charon-suite")
-makedepends=('svn' 'cmake')
+makedepends=('bzr' 'cmake')
 depends=('charon-core' 'qt')
 optdepends=('charon-utils: Basic Image manipulation and processing modules'
 'charon: Optical flow estimation modules'
+'doxygen: documentation generation'
+'texlive-latexextra: pdf-documentation and formulas'
 )
 
 build() {
-  msg "Fetching svn sources from SourceForge..."
+  msg "Fetching bzr sources from Launchpad..."
 
-  svn co https://charon-suite.svn.sourceforge.net/svnroot/charon-suite/tuchulcha/trunk tuchulcha
+  #bzr branch lp:tuchulcha
 
   msg "Configuring build..."
 
   mkdir -p $startdir/build
   cd $startdir/build
 
-  cmake $startdir/src/tuchulcha
+  cmake $startdir/src/tuchulcha \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -Dcharon-core_HTMLDOC_DIR=/usr/share/doc/charon-core
+
   make
+
+  if [ $(pacman -Qq doxygen) = "doxygen" ]
+  then
+    msg "Doxygen installed, creating documentation..."
+    make doc
+  fi
   
 }
 

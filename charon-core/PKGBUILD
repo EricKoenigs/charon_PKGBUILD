@@ -8,23 +8,32 @@ arch=('any')
 url="https://sourceforge.net/apps/trac/charon-suite"
 license=('LGPL3')
 groups=("charon-suite")
-makedepends=('svn' 'cmake')
+makedepends=('bzr' 'cmake')
 optdepends=('doxygen: documentation generation'
 'texlive-latexextra: pdf-documentation and formulas'
 )
 
 build() {
-  msg "Fetching svn sources from SourceForge..."
+  msg "Fetching bzr sources from Launchpad..."
 
-  svn co https://charon-suite.svn.sourceforge.net/svnroot/charon-suite/charon-core/trunk charon-core
+  #bzr branch lp:charon-core 
 
   msg "Configuring build..."
 
   mkdir -p $startdir/build
   cd $startdir/build
 
-  cmake $startdir/src/charon-core
+  cmake $startdir/src/charon-core \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=/usr
+
   make
+
+  if [ $(pacman -Qq doxygen) = "doxygen" ]
+  then
+    msg "Doxygen installed, creating documentation..."
+    make doc
+  fi
   
 }
 
