@@ -19,7 +19,7 @@ optdepends=('charon-utils: Basic Image manipulation and processing modules'
 build() {
   msg "Fetching bzr sources from Launchpad..."
 
-  #bzr branch lp:tuchulcha
+  bzr branch lp:tuchulcha
 
   msg "Configuring build..."
 

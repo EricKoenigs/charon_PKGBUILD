@@ -17,7 +17,7 @@ optdepends=('doxygen: documentation generation'
 build() {
   msg "Fetching bzr sources from Launchpad..."
 
-  #bzr branch lp:charon-flow
+  bzr branch lp:charon-flow
 
   msg "Configuring build..."
 

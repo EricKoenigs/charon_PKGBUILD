@@ -17,33 +17,33 @@ case $1 in
 		;;
 	core )
 		echo "Building charon-core..."
-		#cd charon-core
-		#makepkg -si --noconfirm $2
-		#cd $wdir
+		cd charon-core
+		makepkg -si --noconfirm $2
+		cd $wdir
 		;;
 	utils )
 		echo "Building charon-utils..."
-		#cd charon-utils
-		#makepkg -si --noconfirm $2
-		#cd $wdir
+		cd charon-utils
+		makepkg -si --noconfirm $2
+		cd $wdir
 		;;
 	flow )
 		echo "Building charon-flow..."
-		#cd charon
-		#makepkg -si --noconfirm $2
-		#cd $wdir
+		cd charon
+		makepkg -si --noconfirm $2
+		cd $wdir
 		;;
 	tuchulcha )
 		echo "Building Tuchulcha..."
-		#cd tuchulcha
-		#makepkg -si --noconfirm $2
-		#cd $wdir
+		cd tuchulcha
+		makepkg -si --noconfirm $2
+		cd $wdir
 		;;
 	template )
 		echo "Building templategenerator..."
-		#cd templategenerator
-		#makepkg -si --noconfirm $2
-		#cd $wdir
+		cd templategenerator
+		makepkg -si --noconfirm $2
+		cd $wdir
 		;;
 	help|* )
 		echo "Possible options are:"
