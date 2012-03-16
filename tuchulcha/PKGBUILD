@@ -29,7 +29,7 @@ build() {
   cmake $startdir/src/tuchulcha \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX=/usr \
-    -Dcharon-core_HTMLDOC_DIR=/usr/share/doc/charon-core
+    -Dcharon-core_HTMLDOC_DIR=/usr/doc/charon-core/html
 
   make
 
@@ -38,7 +38,9 @@ build() {
     msg "Doxygen installed, creating documentation..."
     make doc
   fi
-  
+
+  # Fix references to $srcdir
+  sed -i "s#${srcdir}/${pkgname}#/usr#" doc/*.tag
 }
 
 package() {
