@@ -2,7 +2,7 @@
 
 pkgname=charon-core
 pkgver=0.1.6
-pkgrel=1
+pkgrel=2
 pkgdesc="Part of the Charon-Suite. Basic framework for module management."
 arch=('any')
 url="https://sourceforge.net/apps/trac/charon-suite"
@@ -25,18 +25,19 @@ build() {
 
   cmake $startdir/src/charon-core \
     -DCMAKE_BUILD_TYPE=Release \
-    -DCMAKE_INSTALL_PREFIX=/usr
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -Dcharon-core_INSTALL_DOC=/usr/share/doc/$pkgname
 
   make
 
-  if [ $(pacman -Qq doxygen) = "doxygen" ]
+  if [ "$(pacman -Qq | grep '^doxygen$' )" ]
   then
     msg "Doxygen installed, creating documentation..."
     make doc
-  fi
 
-  # Fix references to $srcdir
-  sed -i "s#${srcdir}/${pkgname}#/usr#" doc/*.tag
+    # Fix references to $srcdir
+    sed -i "s#${srcdir}/${pkgname}#/usr#" doc/*.tag
+  fi
 }
 
 package() {

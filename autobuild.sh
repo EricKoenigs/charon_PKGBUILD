@@ -46,6 +46,20 @@ case $1 in
 		makepkg -si --noconfirm $2
 		cd $wdir
 		;;
+	pkg )
+		echo "Creating AUR source tarballs..."
+		cd charon-core
+		makepkg --source
+		cd $wdir/charon-utils
+		makepkg --source
+		cd $wdir/charon
+		makepkg --source
+		cd $wdir/tuchulcha
+		makepkg --source
+		cd $wdir/templategenerator
+		makepkg --source
+		cd $wdir
+		;;
 	help|* )
 		echo "Possible options are:"
 		echo ""
@@ -55,6 +69,7 @@ case $1 in
 		echo "flow : build charon-flow."
 		echo "tuchulcha : build tuchulcha."
 		echo "template : build template-generator."
+		echo "pkg : make AUR source tarballs."
 		echo "help : you're viewing this right now."
 		echo ""
 		echo "You can pass additional flags to makepkg as a second argument to this script."
